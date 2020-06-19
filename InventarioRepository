@@ -1,0 +1,45 @@
+//CARPETA java/com.mimercado.programa
+
+package com.miMercado.programa;
+
+import android.app.Application;
+import android.os.AsyncTask;
+import androidx.lifecycle.LiveData;
+import com.miMercado.programa.db.InventarioRoomDatabase;
+import com.miMercado.programa.db.dao.InventarioDao;
+import com.miMercado.programa.db.entity.InventarioEntity;
+import java.util.List;
+
+class InventarioRepository {
+    private InventarioDao inventarioDao;
+    private LiveData<List<InventarioEntity>> allInventario;
+
+    public InventarioRepository(Application application){
+        InventarioRoomDatabase db = InventarioRoomDatabase.getDatabase(application);
+        inventarioDao = db.inventarioDao();
+        allInventario = inventarioDao.getAll();
+    }
+
+    public LiveData<List<InventarioEntity>>  getAll(){return allInventario; }
+
+    public void insert (InventarioEntity inventario){
+        new insertAsyncTask(inventarioDao).execute(inventario);
+
+    }
+
+    private  static class insertAsyncTask extends AsyncTask<InventarioEntity, Void, Void>{
+        private InventarioDao inventarioDatoAsyncTask;
+
+        insertAsyncTask(InventarioDao dao){
+            inventarioDatoAsyncTask = dao;
+        }
+
+
+        @Override
+        protected Void doInBackground(InventarioEntity... inventarioEntities) {
+            inventarioDatoAsyncTask.insert(inventarioEntities[0]);
+            return null;
+        }
+    }
+
+}
