@@ -1,0 +1,27 @@
+//CARPETA java/com.mimercado.programa/viewmodel
+
+package com.miMercado.programa;
+
+import android.app.Application;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import com.miMercado.programa.db.entity.InventarioEntity;
+import java.util.List;
+
+public class AgregarViewModel extends AndroidViewModel {
+    public LiveData<List<InventarioEntity>> allInvent;
+    public InventarioRepository inventarioRepository;
+
+    public AgregarViewModel(Application application){
+        super(application);
+
+        inventarioRepository = new InventarioRepository(application);
+        allInvent = inventarioRepository.getAll();
+    }
+
+    // el fragment que necesita recibir la nueva lista de datos
+    public LiveData<List<InventarioEntity>> getAllInvent(){return allInvent;}
+
+    // El fragment que inserta un nuevo item, debera comunicarlo a este ViewModel
+    public void insertarInventario(InventarioEntity nuevoInventarioEntity){inventarioRepository.insert(nuevoInventarioEntity);}
+}
