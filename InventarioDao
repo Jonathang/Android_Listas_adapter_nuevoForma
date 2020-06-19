@@ -1,4 +1,4 @@
-// CARPETA JAVA/COM.MIMERCADO.PROGRAMA/DB
+// CARPETA JAVA/COM.MIMERCADO.PROGRAMA/DB/DAO
 package com.miMercado.programa.db.dao;
 
 import androidx.lifecycle.LiveData;
