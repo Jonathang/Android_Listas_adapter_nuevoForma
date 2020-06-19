@@ -1,0 +1,29 @@
+// CARPETA java/com.mimercado.programa/db
+
+package com.miMercado.programa.db;
+
+import android.content.Context;
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import com.miMercado.programa.db.dao.InventarioDao;
+import com.miMercado.programa.db.entity.InventarioEntity;
+
+@Database(entities = {InventarioEntity.class}, version = 1)
+public abstract class InventarioRoomDatabase extends RoomDatabase {
+    public abstract InventarioDao inventarioDao();
+    private static volatile InventarioRoomDatabase INSTANCE;
+
+    public static InventarioRoomDatabase getDatabase(final Context context){
+       if (INSTANCE == null){
+            synchronized (InventarioRoomDatabase.class){
+                if (INSTANCE == null){
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            InventarioRoomDatabase.class, "inventario_database").build();
+                }
+            }
+       }
+
+       return INSTANCE;
+    }
+}
