@@ -1,0 +1,89 @@
+//CARPETA java/com.mimercado.programa/ui
+
+package com.miMercado.programa.ui;
+
+import androidx.recyclerview.widget.RecyclerView;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import com.miMercado.programa.db.entity.InventarioEntity;
+import com.miMercado.programa.R;
+import java.util.List;
+
+public class MyInventarioRecyclerViewAdapter extends RecyclerView.Adapter<MyInventarioRecyclerViewAdapter.ViewHolder> {
+
+    private List<InventarioEntity> mValues;
+    private Context ctx;
+
+    public MyInventarioRecyclerViewAdapter(List<InventarioEntity> items, Context ctx) {
+        mValues = items;
+        this.ctx = ctx;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_inventario, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        holder.mItem = mValues.get(position);
+
+        holder.tvcantidad.setText(String.valueOf(holder.mItem.getCantidad()));
+        holder.tvproducto.setText(holder.mItem.getProducto());
+        holder.tvcantidadnumero.setText(holder.mItem.getCantidadnumero());
+        holder.tvmedida.setText(holder.mItem.getSpinner());
+        holder.tvfecha.setText(holder.mItem.getFecha());
+        holder.tvbarras.setText(String.valueOf(holder.mItem.getCbarras()));
+
+
+
+       holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mValues.size();
+    }
+
+    public void setNuevoInventario(List<InventarioEntity>nuevoInventario){
+        this.mValues = nuevoInventario;
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public final View mView;
+        public final TextView tvcantidad;
+        public final TextView tvproducto;
+        public final TextView tvmedida;
+        public final TextView tvfecha;
+        public final TextView tvcantidadnumero;
+        public final TextView tvbarras;
+        public InventarioEntity mItem;
+
+        public ViewHolder(View view) {
+            super(view);
+            mView = view;
+            tvcantidad = view.findViewById(R.id.tvcantidad);
+            tvproducto = view.findViewById(R.id.tvproducto);
+            tvmedida = view.findViewById(R.id.tvmedida);
+            tvfecha = view.findViewById(R.id.tvfecha);
+            tvcantidadnumero = view.findViewById(R.id.tvcantidadnumero);
+            tvbarras = view.findViewById(R.id.tvbarras);
+        }
+
+        @Override
+        public String toString() {
+            return super.toString() + " '" + tvcantidad.getText() + "'";
+        }
+    }
+}
