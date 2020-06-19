@@ -1,0 +1,90 @@
+// CARPETA JAVA/COM.MIMERCADO.PROGRAMA/DB/ENTITIY
+
+package com.miMercado.programa.db.entity;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "despensa")
+public class InventarioEntity {
+    @PrimaryKey(autoGenerate = true)
+
+    public int id;
+    public int cantidad;
+    public String producto;
+    public String spinner;
+    public String fecha;
+    public String cantidadnumero;
+    @NonNull
+    @ColumnInfo(name = "c_barras")
+    public long cbarras;
+
+    public InventarioEntity(int cantidad, String producto, String spinner, String fecha, String cantidadnumero, long cbarras) {
+        this.cantidad = cantidad;
+        this.producto = producto;
+        this.spinner = spinner;
+        this.fecha = fecha;
+        this.cantidadnumero = cantidadnumero;
+        this.cbarras = cbarras;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
+    }
+
+    public String getSpinner() {
+        return spinner;
+    }
+
+    public void setSpinner(String spinner) {
+        this.spinner = spinner;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getCantidadnumero() {
+        return cantidadnumero;
+    }
+
+    public void setCantidadnumero(String cantidadnumero) {
+        this.cantidadnumero = cantidadnumero;
+    }
+
+    public long getCbarras() {
+        return cbarras;
+    }
+
+    public void setCbarras(long cbarras) {
+        this.cbarras = cbarras;
+    }
+
+
+}
