@@ -1,0 +1,102 @@
+//CARPETA java/com.mimercado.programa/ui
+
+package com.miMercado.programa.ui;
+
+import androidx.lifecycle.ViewModelProviders;
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
+import com.miMercado.programa.AgregarViewModel;
+import com.miMercado.programa.R;
+import com.miMercado.programa.db.entity.InventarioEntity;
+
+public class AgregarFragment extends Fragment {
+
+    public static AgregarFragment newInstance() {
+        return new AgregarFragment();
+    }
+    private AgregarViewModel mViewModel;
+    // Agregar producto
+    EditText cantidad, producto, caducidad, barras, cantidadnumero;
+    Spinner spinner;
+    Button btnagregar;
+
+    // Consultar producto
+    EditText conbarras;
+    TextView conproducto, conpeso, conspinner, concaducidad;
+    Button btnconsultar;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_agregar, container, false);
+        // Agregar producto
+        cantidad = v.findViewById(R.id.etcantidad);
+        producto = v.findViewById(R.id.etproducto);
+        caducidad = v.findViewById(R.id.etcaducidad);
+        barras = v.findViewById(R.id.etbarras);
+        spinner = v.findViewById(R.id.spinnermedida);
+        cantidadnumero = v.findViewById(R.id.etmedidanumero);
+        btnagregar = v.findViewById(R.id.btnagregar);
+
+        //Consultar producto
+        conbarras = v.findViewById(R.id.etconsultarbarras);
+        conproducto = v.findViewById(R.id.tvconsultaproducto);
+        conpeso = v.findViewById(R.id.tvconsultapeso);
+        conspinner = v.findViewById(R.id.tvconsultaspiner);
+        concaducidad = v.findViewById(R.id.tvconsultacaducidad);
+        btnconsultar = v.findViewById(R.id.btnconsultar);
+
+        ControladorAgregar();
+        ControladorConsultar();
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    public void ControladorAgregar(){
+        btnagregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  Integer cant = Integer.valueOf(cantidad.getText().toString());
+                  String prod = producto.getText().toString();
+                  String cad = caducidad.getText().toString();
+                  String canum = cantidadnumero.getText().toString();
+                  String spin = spinner.getSelectedItem().toString();
+                  Long bar = Long.valueOf(barras.getText().toString());
+
+                  // Comunicar al ViewModel el nuevo dato
+                mViewModel = ViewModelProviders.of(getActivity()).get(AgregarViewModel.class);
+                mViewModel.insertarInventario(new InventarioEntity(cant, prod, cad, canum, spin, bar));
+
+                cantidad.setText(null);
+                producto.setText(null);
+                caducidad.setText(null);
+                cantidadnumero.setText(null);
+                barras.setText(null);
+            }
+        });
+    }
+
+    public void ControladorConsultar(){
+        btnconsultar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+    }
+
+}
